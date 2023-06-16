@@ -11,17 +11,18 @@ sheet1 = workbook1.active
 
 upc = workbook1["Confirmed_UPC"]
 
+code = int(input("Enter your code:"))
+
 column_letter = 'P'
 row_number = 2
-
-code = int(input("Enter your code:"))
 
 for u in UPC1:
     if code == u:
         print("Success")
         cell = sheet1[column_letter + str(row_number)]
         cell.value = "Approved"
-        workbook1.save("data/Sample UPC Data.xlsx")
+        filename = "Verification_Report.xlsx"
+        workbook1.save(filename)
         break
       # first_element = [u]
       # print("Success")
