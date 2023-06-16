@@ -1,12 +1,43 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+
 import pandas as pd
+
+import openpyxl
 
 app = Flask(__name__)
 
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+@app.route('/', methods=["GET", "POST"])
+def form():
+    if request.method == "POST" and "z" in request.form:
+        x = request.form.get('z')
+        x = int(x)
+        dataset = pd.read_excel("data/Sample UPC Data.xlsx")
+        upc = dataset["UPC"]
+        approved_Denied = dataset['Approve/Denial Status']
+        denial_Reason = dataset['Denial Reason']
+        filename = "Verification_Report.xlsx"
+        # if x.all() == upc:
+        #     approved_Denied == "Approved"
+        #     dataset.to_excel(filename)
+        # else:
+        #     approved_Denied == "Denied"
+        #     denial_Reason == 'Invalid UPC'
+        #     dataset.to_excel(filename)
+        for u in upc:
+            if u == x:
+                approved_Denied == "Approved"
+                dataset.to_excel(filename)
+            else:
+                approved_Denied == "Denied"
+                denial_Reason == 'Invalid UPC'
+                dataset.to_excel(filename)
+        # dataset['Approve/Denial Status'] == "Approved"
+        #     if dataset["UPC"] ==
+        # dataset['Approve/Denial Status'] == "Denied"
+        #     if dataset["UPC"] !=
+        return "Data has been Updated Successfully in Verification_Report.excel,!! Check it out!!"
+    return render_template('form.html')
 
 
 if __name__ == "__main__":
