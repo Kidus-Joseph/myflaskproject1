@@ -8,22 +8,54 @@ batchColumn_2 = set(batchExcel_1.iloc[:, 1])
 sampleExcel_2 = pd.read_excel("data/Sample UPC Data.xlsx")
 sampleColumn_2 = set(sampleExcel_2.iloc[:, 1])
 
-# for value in batchColumn_2:
-#     if value in sampleColumn_2:
-#         print(f"UPC '{value}' found")
-#     else:
-#         print(f"UPC '{value}' not found")
+workbook1 = load_workbook("data/Batch UPC Data.xlsx")
+sheet1 = workbook1.active
+
+upc = workbook1["Confirmed_UPC"]
 
 match_found = False
 for value in batchColumn_2:
+    column_letter = 'P'
+    # row_number = batchExcel_1[batchExcel_1.iloc[:, 1]].index.to_numpy()
+    # row_number = dataset1[dataset1["UPC"] == batchExcel_1[batchExcel_1.iloc[:, 1]]].index.to_list()
+    # row_number = batchExcel_1[batchExcel_1["UPC"]] == sampleExcel_2[sampleExcel_2["UPC"]].index.to_list()
+    # row_number = str(row_number)[1:-1]
+    # row_number = int(row_number) + 2
     if value in sampleColumn_2:
         match_found = True
         print(f"UPC '{value}' found in both Excel files.")
+        row_number = batchExcel_1[batchExcel_1["UPC"]
+                                  == value].index.to_numpy()
+        row_number = str(row_number)[1:-1]
+        row_number = int(row_number) + 2
+        cell = sheet1[column_letter + str(row_number)]
+        cell.value = "Approved"
+        filename = "Verification_Report2.xlsx"
+        workbook1.save(filename)
     else:
         print(f"UPC '{value}' invalid")
+        row_number = batchExcel_1[batchExcel_1["UPC"]
+                                  == value].index.to_numpy()
+        row_number = str(row_number)[1:-1]
+        row_number = int(row_number) + 2
+        cell = sheet1[column_letter + str(row_number)]
+        cell.value = "Denied"
+        filename = "Verification_Report2.xlsx"
+        workbook1.save(filename)
 
 if not match_found:
     print("No values found in the second Excel file.")
+
+# match_found = False
+# for value in batchColumn_2:
+#     if value in sampleColumn_2:
+#         match_found = True
+#         print(f"UPC '{value}' found in both Excel files.")
+#     else:
+#         print(f"UPC '{value}' invalid")
+
+# if not match_found:
+#     print("No values found in the second Excel file.")
 
 # for value in batchColumn_2:
 #     if value in sampleColumn_2:
