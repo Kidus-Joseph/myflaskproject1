@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 
 import pandas as pd
 
-import openpyxl
+from openpyxl import workbook, load_workbook
 
 app = Flask(__name__)
 
@@ -13,35 +13,37 @@ def form():
         x = request.form.get('z')
         x = int(x)
         dataset = pd.read_excel("data/Sample UPC Data.xlsx")
-        upc = dataset["UPC"]
-        approved_Denied = dataset['Approve/Denial Status']
-        denial_Reason = dataset['Denial Reason']
+        upc1 = dataset["UPC"]
+        workbook1 = load_workbook("data/Sample UPC Data.xlsx")
+        sheet1 = workbook1.active
+        upc = workbook1["Confirmed_UPC"]
+        column_letter = 'P'
+        row_number = dataset[dataset["UPC"] == x].index.to_list()
+        row_number = str(row_number)[1:-1]
+        row_number = int(row_number) + 2
         filename = "Verification_Report.xlsx"
-        # if x.all() == upc:
-        #     approved_Denied == "Approved"
-        #     dataset.to_excel(filename)
-        # else:
-        #     approved_Denied == "Denied"
-        #     denial_Reason == 'Invalid UPC'
-        #     dataset.to_excel(filename)
-        for u in upc:
-            if u == x:
-                approved_Denied == "Approved"
-                dataset.to_excel(filename)
-            else:
-                approved_Denied == "Denied"
-                denial_Reason == 'Invalid UPC'
-                dataset.to_excel(filename)
-        # dataset['Approve/Denial Status'] == "Approved"
-        #     if dataset["UPC"] ==
-        # dataset['Approve/Denial Status'] == "Denied"
-        #     if dataset["UPC"] !=
+        for u in upc1:
+            if x == u:
+                cell = sheet1[column_letter + str(row_number)]
+                cell.value = "Approved"
+                filename = "Verification_Report.xlsx"
+                workbook1.save(filename)
         return "Data has been Updated Successfully in Verification_Report.excel,!! Check it out!!"
     return render_template('form.html')
 
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+# if x.all() == upc:
+    #     approved_Denied == "Approved"
+    #     dataset.to_excel(filename)
+    # else:
+    #     approved_Denied == "Denied"
+    #     denial_Reason == 'Invalid UPC'
+    #     dataset.to_excel(filename)
+    # approved_Denied = dataset['Approve/Denial Status']
+    # denial_Reason = dataset['Denial Reason']
 
 # from flask import Flask, jsonify, request
 # import requests

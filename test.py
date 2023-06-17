@@ -1,5 +1,6 @@
 from openpyxl import workbook, load_workbook
 import pandas as pd
+import numpy as np
 
 dataset1 = pd.read_excel("data/Sample UPC Data.xlsx")
 UPC1 = dataset1["UPC"]
@@ -14,7 +15,10 @@ upc = workbook1["Confirmed_UPC"]
 code = int(input("Enter your code:"))
 
 column_letter = 'P'
-row_number = 2
+row_number = dataset1[dataset1["UPC"] == code].index.to_list()
+row_number = str(row_number)[1:-1]
+row_number = int(row_number) + 2
+print(row_number)
 
 for u in UPC1:
     if code == u:
@@ -32,4 +36,3 @@ for u in UPC1:
       # dataset1["Approve/Denial Status"] == "Approved"
     else:
         print("Failure")
-        break
