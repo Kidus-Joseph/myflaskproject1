@@ -16,6 +16,7 @@ upc = workbook1["Confirmed_UPC"]
 match_found = False
 for value in batchColumn_2:
     column_letter = 'P'
+    column_letter1 = 'Q'
     # row_number = batchExcel_1[batchExcel_1.iloc[:, 1]].index.to_numpy()
     # row_number = dataset1[dataset1["UPC"] == batchExcel_1[batchExcel_1.iloc[:, 1]]].index.to_list()
     # row_number = batchExcel_1[batchExcel_1["UPC"]] == sampleExcel_2[sampleExcel_2["UPC"]].index.to_list()
@@ -40,6 +41,8 @@ for value in batchColumn_2:
         row_number = int(row_number) + 2
         cell = sheet1[column_letter + str(row_number)]
         cell.value = "Denied"
+        cell = sheet1[column_letter1 + str(row_number)]
+        cell.value = "UPC Invalid/Not Found"
         filename = "Verification_Report2.xlsx"
         workbook1.save(filename)
 
