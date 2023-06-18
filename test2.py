@@ -17,11 +17,6 @@ match_found = False
 for value in batchColumn_2:
     column_letter = 'P'
     column_letter1 = 'Q'
-    # row_number = batchExcel_1[batchExcel_1.iloc[:, 1]].index.to_numpy()
-    # row_number = dataset1[dataset1["UPC"] == batchExcel_1[batchExcel_1.iloc[:, 1]]].index.to_list()
-    # row_number = batchExcel_1[batchExcel_1["UPC"]] == sampleExcel_2[sampleExcel_2["UPC"]].index.to_list()
-    # row_number = str(row_number)[1:-1]
-    # row_number = int(row_number) + 2
     if value in sampleColumn_2:
         match_found = True
         print(f"UPC '{value}' found in both Excel files.")
@@ -48,6 +43,12 @@ for value in batchColumn_2:
 
 if not match_found:
     print("No values found in the second Excel file.")
+
+# row_number = batchExcel_1[batchExcel_1.iloc[:, 1]].index.to_numpy()
+    # row_number = dataset1[dataset1["UPC"] == batchExcel_1[batchExcel_1.iloc[:, 1]]].index.to_list()
+    # row_number = batchExcel_1[batchExcel_1["UPC"]] == sampleExcel_2[sampleExcel_2["UPC"]].index.to_list()
+    # row_number = str(row_number)[1:-1]
+    # row_number = int(row_number) + 2
 
 # match_found = False
 # for value in batchColumn_2:

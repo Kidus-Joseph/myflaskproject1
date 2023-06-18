@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Upload Example</title>
+        <script>
+            function showPopup() {
+                alert("Your upload file is currently being processed, please wait as this may take a few minutes. You will be notified when processing has been completed.");
+            }
+        </script>
+    </head>
+
+    <body>
+        <h1>Upload E</h1>
+        <form action="/uploadVerification" method="POST" enctype="multipart/form-data" onsubmit="showPopup()">
+            <input type="file" name="file">
+            <input type="submit" value="Upload">
+        </form>
+    </body>
+
+</html>

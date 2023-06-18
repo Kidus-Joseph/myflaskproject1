@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_file
+
+from fileinput import filename
 
 import pandas as pd
 
@@ -28,12 +30,74 @@ def form():
                 cell.value = "Approved"
                 filename = "Verification_Report.xlsx"
                 workbook1.save(filename)
-        return "Data has been Updated Successfully in Verification_Report.excel,!! Check it out!!"
-    return render_template('form.html')
+        return "Data has been Updated Successfully in Verification_Report.excel!! Check it out!!"
+    return render_template('verification.html')
+
+
+@app.route('/uploadVerification')
+def uploadVerification():
+    return render_template('verification.html')
+
+
+# @app.route('/uploadPopUp')
+# def uploadPopUp():
+#     return render_template('verification.html')
+
+
+@app.route('/success', methods=['POST'])
+def success():
+    if request.method == 'POST':
+        f = request.files['file']
+        f.save(f.filename)
+        uploadedFile = f
+        batchExcel_1 = pd.read_excel(uploadedFile)
+        batchColumn_2 = set(batchExcel_1.iloc[:, 1])
+
+        sampleExcel_2 = pd.read_excel("data/Sample UPC Data.xlsx")
+        sampleColumn_2 = set(sampleExcel_2.iloc[:, 1])
+
+        workbook1 = load_workbook(uploadedFile)
+        sheet1 = workbook1.active
+
+        upc = workbook1["Confirmed_UPC"]
+
+        match_found = False
+        for value in batchColumn_2:
+            column_letter = 'P'
+            column_letter1 = 'Q'
+            if value in sampleColumn_2:
+                match_found = True
+                # print(f"UPC '{value}' found in both Excel files.")
+                row_number = batchExcel_1[batchExcel_1["UPC"]
+                                          == value].index.to_numpy()
+                row_number = str(row_number)[1:-1]
+                row_number = int(row_number) + 2
+                cell = sheet1[column_letter + str(row_number)]
+                cell.value = "Approved"
+                outputFileName = "Verification_Report2.xlsx"
+                workbook1.save(outputFileName)
+            else:
+                # print(f"UPC '{value}' invalid")
+                row_number = batchExcel_1[batchExcel_1["UPC"]
+                                          == value].index.to_numpy()
+                row_number = str(row_number)[1:-1]
+                row_number = int(row_number) + 2
+                cell = sheet1[column_letter + str(row_number)]
+                cell.value = "Denied"
+                cell = sheet1[column_letter1 + str(row_number)]
+                cell.value = "UPC Invalid/Not Found"
+                outputFileName = "Verification_Report2.xlsx"
+                workbook1.save(outputFileName)
+
+        if not match_found:
+            print("No values found in the second Excel file.")
+
+        return render_template('checkout.html')
+    return render_template('verification.html')
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000, server_name='GS1 Scout')
 
 # if x.all() == upc:
     #     approved_Denied == "Approved"

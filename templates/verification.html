@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Flask Application</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+        <script>
+            function showPopup() {
+                alert("Your upload file is currently being processed, please wait as this may take a few minutes. You will be notified when processing has been completed.");
+            }
+        </script>
+        <style>
+            .contact-us .title p b {
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                align-items: center;
+                font-size: 80px;
+            }
+        </style>
+        <style>
+            .contact-us .subtitle p b {
+                display: flex;
+                justify-content: left;
+                text-align: left;
+                align-items: left;
+                font-size: 40px;
+            }
+        </style>
+        <!-- <style>
+            .contact-us .uploadTitle div p b {
+                display: flex;
+                justify-content: left;
+                text-align: left;
+                align-items: left;
+                font-size: 50px;
+            }
+        </style> -->
+        <style>
+            input {
+                background-color: white;
+                color: black;
+                padding: 10px 20px;
+                border: none;
+                cursor: pointer;
+                display: flex;
+                justify-content: left;
+                text-align: left;
+                align-items: left;
+
+            }
+        </style>
+        <style>
+            input:hover {
+                background-color: #4169E1;
+                color: white;
+            }
+        </style>
+        <!-- <script src="{{url_for('static', filename='index.js')}}"></script> -->
+    </head>
+
+    <body>
+        <div class="contact-us">
+            <div class="title">
+                <p><b>GS1 Scout</b></p>
+            </div>
+            <!-- <div class="subtitle1">
+                <p><b>Input Code</b></p>
+            </div> -->
+            <form action='{{ url_for("form") }}' method="POST">
+                <label for="UPC:">Input your UPC: </label> <input id="z" name="z" required="" type="number" />
+                <button id="SUBMIT">SUBMIT</button>
+                <div class="subtitle">
+                    <p><b>Upload File</b></p>
+                </div>
+            </form>
+            <form action="/success" method="POST" enctype="multipart/form-data" onsubmit="showPopup()">
+                <input type="file" name="file">
+                <input type="submit" value="Upload">
+            </form>
+            <img
+                src="https://media.istockphoto.com/id/1326581987/vector/chick-hatch-from-egg-step-from-cracked-to-hatch-egg-baby-of-chicken-yellow-bird-with.jpg?s=612x612&w=0&k=20&c=K6mKNJaPEJcl6IWvRpxNkqSyq4gdVblKXI22clguWEc=">
+        </div>
+    </body>
+
+</html>
