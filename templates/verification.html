@@ -39,6 +39,26 @@
             }
         </style> -->
         <style>
+            .contact-us .downloadButton {
+                text-align: center;
+                font-family: Arial, sans-serif;
+            }
+
+            .contact-us.downloadButton button {
+                padding: 10px 20px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                cursor: pointer;
+                font-size: 16px;
+                border-radius: 4px;
+            }
+
+            .contact-us.downloadButton button:hover {
+                background-color: #45a049;
+            }
+        </style>
+        <style>
             input {
                 background-color: white;
                 color: black;
@@ -79,6 +99,9 @@
             <form action="/success" method="POST" enctype="multipart/form-data" onsubmit="showPopup()">
                 <input type="file" name="file">
                 <input type="submit" value="Upload">
+            </form>
+            <form class="downloadButton" action="/download" method="GET">
+                <button type="submit">Download File</button>
             </form>
             <img
                 src="https://media.istockphoto.com/id/1326581987/vector/chick-hatch-from-egg-step-from-cracked-to-hatch-egg-baby-of-chicken-yellow-bird-with.jpg?s=612x612&w=0&k=20&c=K6mKNJaPEJcl6IWvRpxNkqSyq4gdVblKXI22clguWEc=">

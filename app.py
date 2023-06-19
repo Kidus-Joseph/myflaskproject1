@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, make_response
 
 from fileinput import filename
 
@@ -38,6 +38,14 @@ def form():
 def uploadVerification():
     return render_template('verification.html')
 
+
+@app.route('/download')
+def download():
+    file_path = r"C:\Users\kidus\myflaskproject\data\UPCUploadTemplate.xlsx"
+    filename = "UPCUploadTemplate.xlsx"
+    response = make_response(send_file(file_path))
+    response.headers["Content-Disposition"] = "attachment; filename=" + filename
+    return response
 
 # @app.route('/uploadPopUp')
 # def uploadPopUp():
