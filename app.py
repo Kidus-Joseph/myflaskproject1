@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template, request, send_file, make_response
 
 from fileinput import filename
@@ -43,13 +45,17 @@ def uploadVerification():
 def download():
     file_path = r"C:\Users\kidus\myflaskproject\data\UPCUploadTemplate.xlsx"
     filename = "UPCUploadTemplate.xlsx"
+    # Create the response object
     response = make_response(send_file(file_path))
+    # Set the "Content-Disposition" header to trigger file download
     response.headers["Content-Disposition"] = "attachment; filename=" + filename
+    # Get the user's home directory
+    home_dir = os.path.expanduser("~")
+    # Set the path to the "Downloads" folder
+    downloads_folder = os.path.join(home_dir, "Downloads")
+    # Set the "X-Sendfile" header to suggest the default save location
+    response.headers["X-Sendfile"] = os.path.join(downloads_folder, filename)
     return response
-
-# @app.route('/uploadPopUp')
-# def uploadPopUp():
-#     return render_template('verification.html')
 
 
 @app.route('/success', methods=['POST'])
@@ -106,53 +112,3 @@ def success():
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000, server_name='GS1 Scout')
-
-# if x.all() == upc:
-    #     approved_Denied == "Approved"
-    #     dataset.to_excel(filename)
-    # else:
-    #     approved_Denied == "Denied"
-    #     denial_Reason == 'Invalid UPC'
-    #     dataset.to_excel(filename)
-    # approved_Denied = dataset['Approve/Denial Status']
-    # denial_Reason = dataset['Denial Reason']
-
-# from flask import Flask, jsonify, request
-# import requests
-# import json
-
-
-# app = Flask(__name__)
-
-
-# @app.route('/api/tag/epc/30F4257BF46DB64000000190?apikey=JbhZI7fNiMnNsS5t', methods=['POST'])
-# def gs1_endpoint():
-#     data = request.get_json()
-#     # Do something with the data
-#     print(data)
-
-#     response = {
-#         'status': 'success',
-#         'message': 'Data processed successfully',
-#     }
-
-#     return jsonify(response), 200
-
-
-# if __name__ == 'main':
-#     app.run(port=5000)
-
-# url = "https://gs1-eu1-pd-rfidcoder-app.azurewebsites.net/api/tag/epc/30F4257BF46DB64000000190?apikey=JbhZI7fNiMnNsS5t"
-
-# data = {
-#     'upc': '622356532419',
-#     'model_#': 'BL770'
-# }
-
-# response = requests.post(url, data=json.dumps(data), headers={
-#                          'Content-Type': 'application/json'})
-
-# if response.status_code == 200:
-#     print(response.json())
-# else:
-#     print('Error:', response.status_code)

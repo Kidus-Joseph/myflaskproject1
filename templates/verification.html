@@ -29,15 +29,6 @@
                 font-size: 40px;
             }
         </style>
-        <!-- <style>
-            .contact-us .uploadTitle div p b {
-                display: flex;
-                justify-content: left;
-                text-align: left;
-                align-items: left;
-                font-size: 50px;
-            }
-        </style> -->
         <style>
             .contact-us .downloadButton {
                 text-align: center;
@@ -78,7 +69,6 @@
                 color: white;
             }
         </style>
-        <!-- <script src="{{url_for('static', filename='index.js')}}"></script> -->
     </head>
 
     <body>
@@ -86,9 +76,6 @@
             <div class="title">
                 <p><b>GS1 Scout</b></p>
             </div>
-            <!-- <div class="subtitle1">
-                <p><b>Input Code</b></p>
-            </div> -->
             <form action='{{ url_for("form") }}' method="POST">
                 <label for="UPC:">Input your UPC: </label> <input id="z" name="z" required="" type="number" />
                 <button id="SUBMIT">SUBMIT</button>
