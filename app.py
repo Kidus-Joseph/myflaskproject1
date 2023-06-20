@@ -105,7 +105,7 @@ def success():
                 row_number = int(row_number) + 2
                 cell = sheet1[column_letter + str(row_number)]
                 cell.value = "Approved"
-                filename = "Verification_Report2.xlsx"
+                filename = "UPC Verification Report.xlsx"
                 workbook1.save(filename)
             else:
                 print(f"UPC '{value}' invalid")
@@ -117,7 +117,7 @@ def success():
                 cell.value = "Denied"
                 cell = sheet1[column_letter1 + str(row_number)]
                 cell.value = "Invalid/Not Found"
-                filename = "Verification_Report2.xlsx"
+                filename = "UPC Verification Report.xlsx"
                 workbook1.save(filename)
 
         if not match_found:

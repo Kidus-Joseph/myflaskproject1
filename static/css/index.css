@@ -69,15 +69,29 @@ button {
     transition: 0.2s all ease-in-out;
     border-bottom: 2px solid transparent;
     outline: none;
+    border-radius: 4px;
+    width: 350px;
+    height: 40px;
+    font-size: 20px;
+    font-family: Arial, sans-serif;
 }
 
 
-button:hover {
+/* button:hover {
     background: inherit;
     color: #2a74b4;
     border-bottom: 2px solid #2a74b4;
-}
+} */
 
+/* #loading {
+    background: url("https://cdn.dribbble.com/users/57052/screenshots/13977617/media/75eaad5f2ba7a6bbb5696fe56a47c118.gif");
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 9999999;
+} */
 
 ::selection {
     background: #ffc7b8;
