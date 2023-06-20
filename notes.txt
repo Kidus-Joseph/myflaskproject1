@@ -1,5 +1,17 @@
-- Batch upload
+- Batch upload [completed]
     Upload product creation excel file
     User fills out the form and is able to submit that file
     User can fill in info for submission
     Make button available for batch upload
+
+- Function code excel; not hard code
+- Add logic where only one unique upc allowed
+    - Example: "Duplicate UPC found in excel file"
+
+- Verifying Information (case doesn't matter)
+- UPC
+- Model number
+- Category 
+- Subcategory
+- Brand
+
