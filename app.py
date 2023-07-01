@@ -63,30 +63,37 @@ def download():
 @app.route('/success', methods=['POST'])
 def success():
     if request.method == 'POST':
+        # Handling uploaded file
         f = request.files['file']
         f.save(f.filename)
         uploadedFile = f
+        # Reading Necessary Excel Files
         batchExcel_1 = pd.read_excel(uploadedFile)
         batchExcel_1 = pd.read_excel("data/Batch UPC Data.xlsx")
         # batchColumn_2 = set(batchExcel_1.iloc[:, 1])
+        # Initializing Key Variables from Imported Excel File
         batchColumn_UPC = batchExcel_1.iloc[:, 1]
         batchColumn_Model = batchExcel_1.iloc[:, 2]
         batchColumn_Category = batchExcel_1.iloc[:, 4]
         batchColumn_Subcategory = batchExcel_1.iloc[:, 5]
         batchColumn_Brand = batchExcel_1.iloc[:, 6]
+        # Reading Excel File Saved on Local Machine
         sampleExcel_2 = pd.read_excel("data/Sample UPC Data.xlsx")
         # sampleColumn_2 = set(sampleExcel_2.iloc[:, 1])
+        # Initializing Key Variables from Imported Excel File
         sampleColumn_UPC = sampleExcel_2.iloc[:, 1]
         sampleColumn_Model = sampleExcel_2.iloc[:, 2]
         sampleColumn_Category = sampleExcel_2.iloc[:, 4]
         sampleColumn_Subcategory = sampleExcel_2.iloc[:, 5]
         sampleColumn_Brand = sampleExcel_2.iloc[:, 6]
 
+        # Loading the Workbook and Setting the Active Sheet
         workbook1 = load_workbook("data/Batch UPC Data.xlsx")
         sheet1 = workbook1.active
 
         upc = workbook1["Confirmed_UPC"]
 
+        # Identifies the Row Number and the Iterates through the Content in the Uploaded File
         for index, row in batchExcel_1.iterrows():
             value = row["UPC"]
             model = row["Model Number"]
@@ -96,7 +103,9 @@ def success():
             match_found = False
             column_letter = 'N'
             column_letter1 = 'O'
+            # Checks to See if the Values in the Excel File Match the Ones in the Sample Data Excel File
             if value in sampleColumn_UPC.values and model in sampleColumn_Model.values and category in sampleColumn_Category.values and subcategory in sampleColumn_Subcategory.values and brand in sampleColumn_Brand.values:
+                # If there is a Match, the Row Number of the Item will be Found and "Approved" will be written in the "Approve/Denial" Column
                 match_found = True
                 print(f"UPC '{value}' found in both Excel files.")
                 row_number = batchExcel_1[batchExcel_1["UPC"]
@@ -105,9 +114,11 @@ def success():
                 row_number = int(row_number) + 2
                 cell = sheet1[column_letter + str(row_number)]
                 cell.value = "Approved"
+                # Outputs Result to an Excel File that is Downloaded
                 filename = "UPC Verification Report.xlsx"
                 workbook1.save(filename)
             else:
+                # If There is no Match, the Row Number of the Item will be Found and "Denied" will be written in the "Approve/Denial" Column as well as the Denial Reason
                 print(f"UPC '{value}' invalid")
                 row_number = batchExcel_1[batchExcel_1["UPC"]
                                           == value].index.to_numpy()
@@ -117,6 +128,7 @@ def success():
                 cell.value = "Denied"
                 cell = sheet1[column_letter1 + str(row_number)]
                 cell.value = "Invalid/Not Found"
+                # Outputs Result to an Excel File that is Downloaded
                 filename = "UPC Verification Report.xlsx"
                 workbook1.save(filename)
 
